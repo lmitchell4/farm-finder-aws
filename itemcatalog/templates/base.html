@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Farm Finder</title>
+    <link type="image/png" href="{{ url_for('static',filename='logo.png') }}" rel="shortcut icon" alt="Site Logo">    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+		<link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet">
+    <link href="{{ url_for('static',filename='bootstrap.min.css') }}" rel="stylesheet">
+		<link href="{{ url_for('static',filename='styles.css') }}" rel="stylesheet">
+	</head>
+
+	<body>
+    {% include "header.html" %}
+    {% include "menu.html" %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% include "footer.html" %}
+
+    <script src="{{ url_for('static',filename='jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='catalog_js.js') }}"></script>
+	</body>
+</html>

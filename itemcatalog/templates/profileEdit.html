@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row small-banner">
+    <div class="col-xs-12 padding-none">
+      <h1>{{ farm.name }}</h1>
+      <p>Manage Mode</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified" id="farm-tabs">
+      <li><a href="{{ url_for('catalog.catalogManage',farm_id=farm.id) }}">Catalog</a></li>
+      <li class="active"><a href="{{ url_for('profile.profileManage',farm_id=farm.id) }}">Profile</a></li>
+      <li><a href="{{ url_for('event.eventManage',farm_id=farm.id) }}">Events</a></li>
+    </ul>
+
+    <div class="main-panel">
+      <div class="sub-panel">
+
+        <div class="row">
+          <h2>Update this farm's profile:</h2>
+        </div>
+
+        <form action="#" method="post" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="name">Farm Name:</label>
+                <input class="form-control" type="text" maxlength="250" name="name" value="{{ farm.name }}" placeholder="Select a name for your farm">
+                {% if name_error %}
+                  <p class="red">You must enter a farm name.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="location">Location:</label>
+                <textarea class="form-control" name="location" cols="50" rows="5" placeholder="Enter the location of your farm">{{ farm.location }}</textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="description">Profile Description:</label>
+                <textarea class="form-control" name="description" cols="50" rows="5" placeholder="Enter a description for your farm">{{ farm.description }}</textarea>
+              </div>
+            </div>
+          </div>
+
+          {% if farm.picture %}
+            <div class="row">
+              <div class="col-xs-9 padding-top">
+                <div class="form-group">
+                  <label>Profile Picture:</label>
+                  <div>
+                    <img src="{{ url_for('static',filename="".join(['userImages/profile/',farm.picture])) }}" class="img-block" alt="Profile picture" title=""/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xs-9">
+                <div class="form-group">
+                  <label for="picture">Select a New Picture:</label>
+                  <input type="file" class="form-control" name="picture"/>
+
+                  <label for="removepicture">Or Select Here for No Picture:</label>
+                  <input type="checkbox" name="removepicture" value="no-pic"/>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="row">
+              <div class="col-xs-9 padding-top">
+                <div class="form-group">
+                  <label for="picture">Select a Profile Picture:</label>
+                  <input type="file" class="form-control" name="picture"/>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="row">
+            <div class="col-xs-12 padding-top">
+              <div id="center-btn-container">
+                <button type="submit" class="btn btn-default" id="save-btn">
+                  Save Profile
+                </button>
+
+                <a href="{{ url_for('profile.profileManage',farm_id=farm.id) }}" id="cancel-btn">
+                  Cancel
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

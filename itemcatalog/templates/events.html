@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row small-banner">
+    <div class="col-xs-12 padding-none">
+      <h1>{{ farm.name }}</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified" id="farm-tabs">
+      <li><a href="{{ url_for('catalog.catalogShow',farm_id=farm.id) }}">Catalog</a></li>
+      <li><a href="{{ url_for('profile.profileShow',farm_id=farm.id) }}">Profile</a></li>
+      <li class="active"><a href="{{ url_for('event.eventShow',farm_id=farm.id) }}">Events</a></li>
+    </ul>
+
+    <div class="main-panel">
+      <div class="sub-panel">
+
+        <div class="row flash">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul>
+                {% for message in messages %}
+                  <li> <strong> {{ message }} </strong> </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+        </div>
+
+
+        {% if events %}
+          <div class="row">
+            <h2 class="event">Events</h2>
+          </div>
+          {% for e in events %}
+            <div class="row">
+              <div class="item">
+                <h3>{{ e.name }}</h3>
+                <p>{{ e.description }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="row">
+            <h3>No upcoming events. Please check back later.</h3>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

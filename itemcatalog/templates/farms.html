@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row small-banner">
+      <div class="col-xs-12 padding-none">
+        <h1>All Farms</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-panel">
+
+      <div class="row flash">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li> <strong> {{ message }} </strong> </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+
+      <div class="v-20">
+      </div>
+
+      {% for farm in farms %}
+        <a class="nodec" href="{{ url_for('catalog.catalogShow',farm_id=farm.id) }}">
+          <div class="row gray-div farm-list-all">
+            <h3>{{ farm.name }}</h3>
+          </div>
+        </a>
+      {% endfor %}
+      <div class="v-10">
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

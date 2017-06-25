@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container">
+    <div class="row small-banner">
+      <div class="col-xs-12 padding-none">
+        <h1>{{ farm.name }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs nav-justified" id="farm-tabs">
+      <li class="active"><a href="{{ url_for('catalog.catalogShow',farm_id=farm.id) }}">Catalog</a></li>
+      <li><a href="{{ url_for('profile.profileShow',farm_id=farm.id) }}">Profile</a></li>
+      <li><a href="{{ url_for('event.eventShow',farm_id=farm.id) }}">Events</a></li>
+    </ul>
+
+    <div class="main-panel">
+      <div class="sub-panel">
+
+        <div class="row flash">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul>
+                {% for message in messages %}
+                  <li> <strong> {{ message }} </strong> </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        {% if items %}
+          {% for category in itemCategories %}
+            {% if category in items.keys() %}
+              <div class="row">
+                <h2 class="catalog">{{ category }}</h2>
+              </div>
+              {% for i in items[category] %}
+                <div class="row">
+                  <div class="col-xs-12 item">
+                    <h3 class="profile">{{ i.name }}</h3>
+                    {% if i.picture %}
+                      <img src="{{ url_for('static',filename="".join(['userImages/item/',i.picture])) }}" class="img-float" alt="Profile picture" title=""/>
+                    {% endif %}
+                    <p>{{ i.description }}</p>
+                    <p class="item-price">{{ i.price }}</p>
+
+                    <div>
+                      <a href="#" class="buy-link">Buy/Barter</a>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+
+        {% else %}
+          <div class="row">
+            <h3>No items yet ...</h3>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

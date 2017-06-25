@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row small-banner">
+    <div class="col-xs-12 padding-none">
+      <h1>My Farms</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-panel">
+      <div class="sub-panel">
+
+        <div class="row flash">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul>
+                {% for message in messages %}
+                  <li> <strong> {{ message }} </strong> </li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        {% if user_farms %}
+          {% for farm in user_farms %}
+            <div class="gray-div">
+              <div>
+                <h3>{{ farm.name }}</h3>
+              </div>
+
+              <div>
+                <a href="{{ url_for('catalog.catalogShow',farm_id=farm.id) }}" class="manage-link">View</a>
+                <p class="inline">|</p>
+                <a href="{{ url_for('catalog.catalogManage',farm_id=farm.id) }}" class="manage-link">Manage</a>
+                <p class="inline">|</p>
+                <a href="{{ url_for('farm.farmDelete',farm_id=farm.id) }}" class="manage-link">Delete</a>
+              </div>
+            </div>
+          {% endfor %}
+          <div class="mar-neg-15">
+          </div>
+        {% else %}
+          <div class="row">
+            <h3>No farms yet ...</h3>
+          </div>
+        {% endif %}
+
+        <div class="v-50">
+        </div>
+
+        <div id="center-btn-container">
+          <a href="{{ url_for('farm.farmNew') }}" id="solid-a-btn">
+            Add Farm
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

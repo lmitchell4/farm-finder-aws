@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+  <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+  <div class="container">
+    <nav class="navbar navbar-default navbar-fixed-top" id="header">
+      <div class="container-fluid">
+        <div class="navbar-header">
+
+          <a id="logo" class="navbar-brand" href="/">
+            <img alt="Logo" src="/static/images/logo.png">
+          </a>
+          <a class="navbar-brand large" id="header-brand" href="/">Farm Finder</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="row small-banner">
+    <div class="col-xs-11 col-xs-offset-1 padding-none">
+      <h1>Log In</h1>
+    </div>
+  </div>
+
+  <div class="container main-panel">
+    <div class="login-sub-panel">
+
+      <div class="row flash">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+              {% for message in messages %}
+                <li> <strong> {{ message }} </strong> </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+      </div>
+
+      <div class="row">
+        <div id="result">
+          <div class="col-xs-8 col-xs-offset-4 padding-none">
+            <h3>Please log in using your Google account</h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-7 col-xs-offset-5 padding-none">
+          <!-- GOOGLE PLUS SIGN IN-->
+          <div id="signinButton">
+            <span class="g-signin"
+                data-scope="openid email"
+                data-clientid="{{ G_CLIENT_ID }}"
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+            </span>
+          </div>
+          <!--END GOOGLE PLUS SIGN IN -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Start GOOGLE PLUS SIGN IN -->
+  <script>
+    function signInCallback(authResult) {
+      if(authResult["code"]) {
+        // Hide the sign-in button now that the user is authorized.
+        $("#signinButton").attr("style", "display: none");
+
+        // Send the one-time-use code to the server; if the server
+        // responds, write a 'login successful' message to the
+        // web page and then redirect back to the main page.
+        $.ajax({
+          type: "POST",
+          url: "/gconnect?state={{STATE}}",
+          processData: false, // don't make the response a string
+          contentType: "application/octet-stream; charset=utf-8",
+          data: authResult["code"],
+          success: function(result) {
+            if(result) {
+              $("#result").html(result);
+              setTimeout(function() {
+                window.location.href = "/farms";
+              }, 4000);
+            } else if(authResult["error"]) {
+              console.log("There was an error: " + authResult["error"]);
+            } else {
+              $("#result").html(
+              "Failed to make a server-side call. Check your configuration and console.");
+            }
+          }
+        });
+      }
+    }
+  </script>
+  <!-- End GOOGLE PLUS SIGN IN -->
+
+{% endblock %}
+

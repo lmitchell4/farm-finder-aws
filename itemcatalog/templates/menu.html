@@ -1,0 +1,30 @@
+<div class="container" id="menu-div">
+  <!-- Bootstrap Navigation Bar -->
+  <nav class="navbar navbar-default navbar-static" id="menu">
+
+    <ul class="nav nav-tabs nav-justified" id="menu-tabs">
+      {% if username %}
+        <li></li>
+        <li></li>
+        <li><a href="{{ url_for('farm.farmsShowAll') }}" id="view-btn">All Farms</a></li>
+        <li></li>
+        <li><a href="{{ url_for('farm.farmsManage') }}" id="manage-btn">My Farms</a></li>
+        <li></li>
+        <li><a href="#" id="profile-btn">My Profile</a></li>
+        <li></li>
+        <li><a href="#" id="discussion-btn">Discussions</a></li>
+        <li></li>
+        <li></li>
+      {% else %}
+        <li></li>
+        <li></li>
+        <li><a href="{{ url_for('farm.farmsShowAll') }}" id="view-btn">All Farms</a></li>
+        <li></li>
+        <li><a href="#" id="discussion-btn">Discussions</a></li>
+        <li></li>
+        <li></li>
+      {% endif %}
+    </ul>
+
+  </nav>
+</div>

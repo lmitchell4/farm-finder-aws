@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row small-banner">
+    <div class="col-xs-12 padding-none">
+      <h1>New Farm</h1>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="main-panel">
+      <div class="sub-panel">
+
+        <div class="row">
+          {% if error %}
+            <h3 class="red">An error occurred.<h3>
+            {{ error }}
+          {% endif %}
+        </div>
+
+        <div class="row">
+          <h2>Create a profile for the new farm:</h2>
+          <h3 class="no-mar-top">(You will be able to add catalog items and events later)</h3>
+        </div>
+
+        <form action="#" method="post" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" maxlength="100" name="name" placeholder="Select a name for your farm"/>
+                {% if name_error %}
+                  <p class="red">You must enter a farm name.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="location">Location:</label>
+                <textarea class="form-control" name="location" cols="50" rows="5" placeholder="Enter the location of your farm"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="description">Profile Description:</label>
+                <textarea class="form-control" name="description" cols="50" rows="5" placeholder="Enter a description for your farm"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-xs-9 padding-top">
+              <div class="form-group">
+                <label for="picture">Picture:</label>
+                <input type="file" class="form-control" name="picture"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="padding-top">
+              <div id="center-btn-container">
+                <button type="submit" class="btn btn-default" id="save-btn">
+                  Create
+                </button>
+
+                <a href="{{ url_for('farm.farmsManage') }}" id="cancel-btn">
+                  Cancel
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+{% endblock %}
